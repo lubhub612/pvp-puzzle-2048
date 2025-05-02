@@ -11,7 +11,8 @@ function App() {
     lastMoveMerged: false,
     isPaused: false,
     gameTime: 0, // Total game time in seconds
-    lastUpdateTime: Date.now() // Timestamp of last update
+    lastUpdateTime: Date.now(), // Timestamp of last update
+    playerTimes: { player1: 0, player2: 0 },
   });
  
   const timerRef = useRef(null);
@@ -117,6 +118,7 @@ function App() {
     }
 
     if (moved) {
+      updateTimers();
       addRandomTile(board);
       const newScores = {...gameState.scores};
       if (gameState.currentPlayer === 1) {
@@ -205,9 +207,13 @@ function App() {
         
         const now = Date.now();
         const elapsedSeconds = Math.floor((now - prev.lastUpdateTime) / 1000);
-        
+        const currentPlayerKey = `player${prev.currentPlayer}`;
         return {
           ...prev,
+          playerTimes: {
+            ...prev.playerTimes,
+            [currentPlayerKey]: prev.playerTimes[currentPlayerKey] + elapsedSeconds
+          },
           gameTime: prev.gameTime + elapsedSeconds,
           lastUpdateTime: now
         };
@@ -215,9 +221,28 @@ function App() {
     }, 1000);
   }
 
+  function updateTimers() {
+    const now = Date.now();
+    const elapsed = Math.floor((now - gameState.lastUpdateTime) / 1000);
+    
+    setGameState(prev => {
+      const currentPlayerKey = `player${prev.currentPlayer}`;
+      return {
+        ...prev,
+        playerTimes: {
+          ...prev.playerTimes,
+          [currentPlayerKey]: prev.playerTimes[currentPlayerKey] + elapsed
+        },
+        gameTime: prev.gameTime + elapsed,
+        lastUpdateTime: now
+      };
+    });
+  }
+
   // Pause the game timer
   function pauseTimer() {
     clearInterval(timerRef.current);
+    updateTimers();
     setGameState(prev => ({
       ...prev,
       isPaused: true
@@ -243,6 +268,7 @@ function App() {
       lastMoveMerged: false,
       isPaused: false,
       gameTime: 0,
+      playerTimes: { player1: 0, player2: 0 },
       lastUpdateTime: Date.now()
     });
     startTimer();
@@ -263,13 +289,17 @@ function App() {
 
   return (
     <div className="app">
+      
       <div className="game-header">
-        <p className="rules">Same player continues if tiles merge!</p>
-        <div className="game-timer">
+      <p className="rules">Same player continues if tiles merge!</p>
+        <h1>2048</h1>
+        <div className="game-timers">
           <span>Game Time: {formatTime(gameState.gameTime)}</span>
+          <span>P1 Time: {formatTime(gameState.playerTimes.player1)}</span>
+          <span>P2 Time: {formatTime(gameState.playerTimes.player2)}</span>
           <button onClick={togglePause} className="pause-button">
             {gameState.isPaused ? 'Resume' : 'Pause'}
-          </button>
+          </button> 
         </div>
       </div>
 

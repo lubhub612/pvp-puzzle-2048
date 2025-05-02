@@ -360,4 +360,27 @@ button:hover {
   background-color: #9f8b77;
 }
 
+/* Add these new styles */
+.game-timers {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #bbada0;
+  padding: 8px 15px;
+  border-radius: 4px;
+}
+
+.player-timer {
+  padding: 5px 10px;
+  background-color: #8f7a66;
+  border-radius: 3px;
+  color: white;
+}
+
+.player-timer span {
+  font-weight: bold;
+}
+
+/* ... (keep existing styles) */
+
 /* ... (keep existing styles) */
