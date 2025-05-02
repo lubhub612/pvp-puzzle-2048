@@ -1,0 +1,363 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #faf8ef;
+  margin: 0;
+  padding: 20px;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  color: #776e65;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.rules {
+  color: #776e65;
+  font-size: 1.1em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.player-tag {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: #bbada0;
+  color: #eee4da;
+  width: 80%;
+  transition: all 0.3s ease;
+}
+
+.player-tag.active {
+  background-color: #edc22e;
+  color: #f9f6f2;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(237, 194, 46, 0.5);
+}
+
+.player-tag h2 {
+  margin: 5px 0;
+}
+
+.board {
+  display: inline-block;
+  background-color: #bbada0;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.board-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.board-row:last-child {
+  margin-bottom: 0;
+}
+
+.cell {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  background-color: #cdc1b4;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: #776e65;
+}
+
+.cell:last-child {
+  margin-right: 0;
+}
+
+.cell-2 { background-color: #eee4da; }
+.cell-4 { background-color: #ede0c8; }
+.cell-8 { background-color: #f2b179; color: #f9f6f2; }
+.cell-16 { background-color: #f59563; color: #f9f6f2; }
+.cell-32 { background-color: #f67c5f; color: #f9f6f2; }
+.cell-64 { background-color: #f65e3b; color: #f9f6f2; }
+.cell-128 { background-color: #edcf72; color: #f9f6f2; font-size: 30px; }
+.cell-256 { background-color: #edcc61; color: #f9f6f2; font-size: 30px; }
+.cell-512 { background-color: #edc850; color: #f9f6f2; font-size: 30px; }
+.cell-1024 { background-color: #edc53f; color: #f9f6f2; font-size: 25px; }
+.cell-2048 { background-color: #edc22e; color: #f9f6f2; font-size: 25px; }
+.cell-empty { background-color: rgba(238, 228, 218, 0.35); }
+
+.game-info {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #bbada0;
+  border-radius: 6px;
+  color: #eee4da;
+  width: 80%;
+}
+
+.bonus-message {
+  color: #edc22e;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.game-over {
+  background-color: rgba(238, 228, 218, 0.73);
+  padding: 15px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+button {
+  background-color: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #9f8b77;
+}
+
+.controls {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #9f8b77;
+  border-radius: 6px;
+}
+
+/* Add these new styles to your existing CSS */
+
+.game-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto 20px;
+  padding: 10px 20px;
+  background-color: #bbada0;
+  border-radius: 6px;
+  color: #eee4da;
+}
+
+.timer {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.pause-button {
+  background-color: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pause-button:hover {
+  background-color: #9f8b77;
+}
+
+.time-warning {
+  color: #f65e3b;
+  font-weight: bold;
+}
+
+/* Modify the player-tag to include timer */
+.player-tag {
+  position: relative;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: #bbada0;
+  color: #eee4da;
+  width: 80%;
+  transition: all 0.3s ease;
+}
+
+.player-timer {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #edc22e;
+  color: #f9f6f2;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Add these new styles */
+.game-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto 20px;
+  padding: 15px;
+  background-color: #bbada0;
+  border-radius: 6px;
+  color: #eee4da;
+}
+
+.time-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-time {
+  font-size: 1em;
+  margin-bottom: 5px;
+}
+
+.turn-time {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.time-warning {
+  color: #f65e3b;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.pause-button {
+  background-color: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pause-button:hover {
+  background-color: #9f8b77;
+  transform: scale(1.05);
+}
+
+.cell {
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Add these new styles */
+.player-timers {
+  display: flex;
+  gap: 20px;
+}
+
+.player-timer {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #bbada0;
+  color: #eee4da;
+}
+
+.player-timer.active {
+  background-color: #edc22e;
+  color: #f9f6f2;
+  font-weight: bold;
+}
+
+.time-warning {
+  color: #f65e3b;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.game-board {
+  margin: 20px 0;
+}
+
+.game-info {
+  background-color: #bbada0;
+  padding: 15px;
+  border-radius: 6px;
+  color: #eee4da;
+  margin-top: 20px;
+}
+
+.game-info p {
+  margin: 8px 0;
+}
+
+/* Add these new styles */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.game-timer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #bbada0;
+  padding: 8px 15px;
+  border-radius: 4px;
+  color: #eee4da;
+}
+
+.game-timer span {
+  font-weight: bold;
+}
+
+.pause-button {
+  background-color: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pause-button:hover {
+  background-color: #9f8b77;
+}
+
+/* ... (keep existing styles) */
